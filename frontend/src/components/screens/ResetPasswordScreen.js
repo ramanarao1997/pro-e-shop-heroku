@@ -5,8 +5,7 @@ import axios from 'axios'
 import FormContainer from '../FormContainer'
 import ErrorMessage from '../ErrorMessage'
 
-const ResetPasswordScreen = () => {
-    const [email, setEmail] = useState('')
+const ResetPasswordScreen = ({ match }) => {
     const [password, setPassword] = useState('')
     const [confirmPassword, setConfirmPassword] = useState('')
 
@@ -16,7 +15,7 @@ const ResetPasswordScreen = () => {
     const submitHandler = async (e) => {
         e.preventDefault()
 
-        if (email === '' || password === '' || confirmPassword === '') {
+        if (password === '' || confirmPassword === '') {
             setError(true)
             setMessage('All fields are required')
         }
@@ -27,15 +26,16 @@ const ResetPasswordScreen = () => {
 
         else {
             try {
-                const response = await axios.put('/api/users/resetpassword', { email: email, password: password })
+                const response = await axios.put(`/api/users/resetpassword/${match.params.token}`, { password: password })
                 const msg = response.data.msg
 
-                if (msg === 'Invalid email!') {
+                console.log(MessageChannel)
+
+                if (msg === 'Invalid token!') {
                     setError(true)
                 }
                 else {
                     setError(false)
-                    setEmail('')
                     setPassword('')
                     setConfirmPassword('')
                 }
@@ -55,16 +55,6 @@ const ResetPasswordScreen = () => {
             {error && <ErrorMessage variant='danger'>{message}</ErrorMessage>}
 
             <Form onSubmit={submitHandler}>
-                <Form.Group controlId='email'>
-                    <Form.Label>Email Address</Form.Label>
-                    <Form.Control
-                        type='email'
-                        placeholder='Enter email'
-                        value={email}
-                        onChange={(e) => setEmail(e.target.value)}
-                    ></Form.Control>
-                </Form.Group>
-
                 <Form.Group controlId='password'>
                     <Form.Label>Password</Form.Label>
                     <Form.Control

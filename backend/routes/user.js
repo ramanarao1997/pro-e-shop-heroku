@@ -11,6 +11,6 @@ router.post('/login', authUser)
 router.route('/profile').get(verifyBearerToken, getUserProfile)
 
 router.post('/sendresetlink', sendResetEmail)
-router.put('/resetpassword', resetPassword)
+router.put('/resetpassword/:token', resetPassword)
 
 export default router

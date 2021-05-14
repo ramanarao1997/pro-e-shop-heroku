@@ -32,7 +32,7 @@ function App() {
           <Route path='/placeorder' component={PlaceOrderScreen} />
           <Route path='/ordersuccess' component={OrderSuccessScreen} />
           <Route path='/forgotpassword' component={ForgotPasswordScreen} />
-          <Route path='/resetpassword' component={ResetPasswordScreen} />
+          <Route path='/resetpassword/:token' component={ResetPasswordScreen} />
         </Container>
       </main>
       <Footer />

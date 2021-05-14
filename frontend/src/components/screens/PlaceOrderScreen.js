@@ -45,7 +45,7 @@ const PlaceOrderScreen = ({ history }) => {
             dispatch({ type: USER_DETAILS_RESET })
             dispatch({ type: ORDER_CREATE_RESET })
         }
-    }, [history, success])
+    }, [history, success, dispatch])
 
     const placeOrderHandler = () => {
         dispatch(

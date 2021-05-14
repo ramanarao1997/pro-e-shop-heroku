@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState } from 'react'
 import { Form, Button } from 'react-bootstrap'
 
 import axios from 'axios'
@@ -21,7 +21,6 @@ const ForgotPasswordScreen = () => {
             try {
                 const response = await axios.post('/api/users/sendresetlink', { email: email })
                 const msg = response.data.msg
-                console.log(msg)
 
                 if (msg === 'No such user found!')
                     setError(true)
@@ -32,7 +31,6 @@ const ForgotPasswordScreen = () => {
             } catch (err) {
                 setError(true)
                 setMessage('Unable to email reset link')
-                console.log('error is ' + err)
             }
         }
     }
