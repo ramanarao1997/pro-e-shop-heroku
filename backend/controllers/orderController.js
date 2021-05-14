@@ -52,7 +52,7 @@ const addOrderItems = asyncHandler(async (req, res) => {
             from: `${process.env.MAIL_ADDR}`,
             to: user.email,
             subject: '[Pro-e-Shop] Order Confirmation',
-            text: 'This email confirms your order from Pro-eShop.' + '\n' +
+            text: 'This email confirms your order from Pro-e-Shop.' + '\n' +
                 `Your order ID is ${orderId}` + '\n\n'
         }
 
