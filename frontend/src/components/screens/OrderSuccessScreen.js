@@ -5,9 +5,9 @@ const OrderSuccessScreen = () => {
     return (
         <Row>
             <Col>
-                <h2 style={{ textAlign: "center", margin: "auto" }}>
-                    Hooray! Your order was placed successfully
-                </h2>
+                <h3 style={{ textAlign: "center", margin: "auto" }}>
+                    Hooray! Your order was placed successfully and a confirmation email was sent to you.
+                </h3>
             </Col>
         </Row>
     )

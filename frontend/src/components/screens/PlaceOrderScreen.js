@@ -27,7 +27,7 @@ const PlaceOrderScreen = ({ history }) => {
         cart.cartItems.reduce((acc, item) => acc + item.price * item.quantity, 0)
     )
 
-    cart.shippingPrice = addDecimals(cart.itemsPrice > 100 ? 0 : 100)
+    cart.shippingPrice = addDecimals(cart.itemsPrice > 100 ? 0 : 30)
     cart.taxPrice = addDecimals(Number((0.15 * cart.itemsPrice).toFixed(2)))
     cart.totalPrice = (
         Number(cart.itemsPrice) +
@@ -40,7 +40,6 @@ const PlaceOrderScreen = ({ history }) => {
 
     useEffect(() => {
         if (success) {
-            // add this screen
             history.push('/ordersuccess')
             dispatch({ type: USER_DETAILS_RESET })
             dispatch({ type: ORDER_CREATE_RESET })
