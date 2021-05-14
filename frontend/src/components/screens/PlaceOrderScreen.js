@@ -97,7 +97,7 @@ const PlaceOrderScreen = ({ history }) => {
                                                     </Link>
                                                 </Col>
                                                 <Col md={4}>
-                                                    {item.quantity} x ${item.price} = ${item.quantity * item.price}
+                                                    {item.quantity} x ${item.price} = ${addDecimals(item.quantity * item.price)}
                                                 </Col>
                                             </Row>
                                         </ListGroup.Item>
