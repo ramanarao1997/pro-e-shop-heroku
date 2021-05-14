@@ -3,6 +3,7 @@ import asyncHandler from 'express-async-handler'
 import User from '../models/user.js'
 import generateToken from '../utils/generateToken.js'
 
+import nodemailer from 'nodemailer'
 
 // @desc: Register a new user
 // @route: Post /api/users/
@@ -59,8 +60,6 @@ const authUser = asyncHandler(async (req, res) => {
     }
 })
 
-
-
 // @desc: Get user profile
 // @route: GET /api/users/profile
 // @access: private
@@ -80,6 +79,83 @@ const getUserProfile = asyncHandler(async (req, res) => {
     }
 })
 
+// @desc: reset email
+// @route: POST /api/users/sendresetlink
+// @access: public
+const sendResetEmail = asyncHandler(async (req, res) => {
+    const email = req.body.email
 
+    if (email === '') {
+        res.status(200).json({
+            msg: 'email required'
+        })
+    }
 
-export { registerUser, authUser, getUserProfile }
+    const user = await User.findOne({ email: email })
+
+    if (user == null) {
+        //403
+        res.status(200).json({
+            msg: 'No such user found!'
+        })
+    } else {
+        const transporter = nodemailer.createTransport({
+            service: "gmail",
+            auth: {
+                user: `${process.env.MAIL_ADDR}`,
+                pass: `${process.env.MAIL_PWD}`
+            }
+        })
+
+        const mailOptions = {
+            from: `${process.env.MAIL_ADDR}`,
+            to: email,
+            subject: '[Pro-e-Shop] Link to reset your password',
+            text: 'This email was sent because you requested to reset your password for your Pro-e-Shop Account.' + '\n' +
+                'Please use the following link to reset your password' + '\n\n' +
+                `${process.env.URI}/resetpassword` + '\n\n' +
+                'If you did not request this, please ignore this email.'
+        }
+
+        transporter.sendMail(mailOptions, (err, data) => {
+            if (err) {
+                console.log('Error sending email using nodemailer!', err)
+                // 500
+                res.status(200).json({
+                    msg: 'Error sending email using nodemailer!'
+                })
+            }
+            else {
+                console.log('Email sent!', data)
+                res.status(200).json({
+                    msg: 'Password reset link sent to email!'
+                })
+            }
+        })
+    }
+})
+
+// @desc: Reset user password
+// @route: PUT /api/users/resetpassword
+// @access: public
+const resetPassword = asyncHandler(async (req, res) => {
+    const { email, password } = req.body
+    const user = await User.findOne({ email })
+
+    if (user) {
+        user.password = password
+        const updatedUser = await user.save()
+
+        if (updatedUser) {
+            res.status(200).json({
+                msg: 'Password reset successfully!'
+            })
+        }
+    } else {
+        res.status(200).json({
+            msg: 'Invalid email!'
+        })
+    }
+})
+
+export { registerUser, authUser, getUserProfile, sendResetEmail, resetPassword }

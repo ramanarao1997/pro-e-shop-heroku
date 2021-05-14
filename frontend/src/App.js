@@ -14,6 +14,8 @@ import RegisterScreen from './components/screens/RegisterScreen'
 import ShippingScreen from './components/screens/ShippingScreen'
 import PlaceOrderScreen from './components/screens/PlaceOrderScreen'
 import OrderSuccessScreen from './components/screens/OrderSuccessScreen'
+import ForgotPasswordScreen from './components/screens/ForgotPasswordScreen'
+import ResetPasswordScreen from './components/screens/ResetPasswordScreen'
 
 function App() {
   return (
@@ -29,6 +31,8 @@ function App() {
           <Route path='/shipping' component={ShippingScreen} />
           <Route path='/placeorder' component={PlaceOrderScreen} />
           <Route path='/ordersuccess' component={OrderSuccessScreen} />
+          <Route path='/forgotpassword' component={ForgotPasswordScreen} />
+          <Route path='/resetpassword' component={ResetPasswordScreen} />
         </Container>
       </main>
       <Footer />

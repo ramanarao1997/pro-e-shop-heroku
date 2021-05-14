@@ -41,8 +41,6 @@ if (process.env.NODE_ENV === 'production') {
     })
 }
 
-
-
 //  any non-existing route / for 404 errors
 app.use(notFound)
 
